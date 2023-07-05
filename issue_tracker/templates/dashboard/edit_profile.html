@@ -1,0 +1,23 @@
+{% extends "dashboard/navigation.html" %}
+
+{% block body %}
+
+<h1>Edit Profile</h1>
+<form action="/edit" method="post">
+    {% csrf_token %}
+    <label>First name</label>
+    <input type="text" name="first_name" value="{{user.first_name}}"
+      placeholder="Enter First name"
+    />
+    <br>
+    <br>
+    <label>Last name</label>
+    <input type="text" name="last_name" value="{{user.last_name}}"
+      placeholder="Enter Last name"
+    />
+    <br>
+    <br>
+    <button type="submit">Save Changes</button>
+</form>
+
+{% endblock %}

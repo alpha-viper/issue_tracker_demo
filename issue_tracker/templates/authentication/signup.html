@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>SignUp</h3>
+    <form onclick="return myfun()" action="/signup" method="post">
+        {% csrf_token %}
+        <div>
+        <label for="">email</label>
+        <input type="email" id="email" name="email" placeholder="Write your valid email address" required>
+        <br>
+        {% if serializer_errors.email %}
+        <p class="error-message">{{ serializer_errors.email.0 }}</p>
+        {% endif %}
+        </div>
+       
+        <div>
+        <label for="">first_name</label>
+        <input type="text" id="first_name" name="first_name" placeholder="Write your first_name" required>
+        <br>
+        {% if serializer_errors.first_name %}
+        <p>{{ serializer_errors.first_name.0 }}</p>
+        {% endif %}
+        </div>
+
+        <div>
+        <label for="">last_name</label>
+        <input type="text" id="last_name" name="last_name" placeholder="Write your last_name" required>
+        <br>
+        {% if serializer_errors.last_name %}
+        <p class="error-message">{{ serializer_errors.last_name.0 }}</p>
+        {% endif %}
+        </div>
+
+        <div>
+        <label for="">date_of_birth</label>
+        <input type="date" id="dob" name="dob" placeholder="Write your d.o.b" required>
+        <br>
+        {% if serializer_errors.dob %}
+        <p class="error-message">{{ serializer_errors.dob.0 }}</p>
+        {% endif %}
+        </div>
+
+        <div>
+        <label for="">Password</label>
+        <input type="password" id="password" name="password" placeholder="Write your valid password" required>
+        <br>
+        {% if serializer_errors.password %}
+        <p class="error-message">{{ serializer_errors.password.0 }}</p>
+        {% endif %}
+        </div>
+
+
+        <div>
+        <label for="">Confirm Password</label>
+        <input type="password" id="password2" name="password2" placeholder="Write your valid password" required>
+        <br>
+     
+        <div id="invalid"></div>
+        </div>
+        <button type="submit">Sign Up</button>
+    </form>
+</body>
+<script>
+    function myfun() {
+      var a = document.getElementById("password").value;
+      var b = document.getElementById("password2").value;
+        console.log(a);
+        console.log(b);
+      if (a != b) {
+        document.getElementById("invalid").innerHTML = "Password must be same";
+        return false;
+      } else {
+        document.getElementById("invalid").innerHTML = "";
+      }
+    }
+  </script>
+</html>

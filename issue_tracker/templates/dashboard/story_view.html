@@ -1,0 +1,81 @@
+{% extends "dashboard/navigation.html" %}
+{% block head %}
+<style>
+
+* {
+  box-sizing: border-box;
+}
+    .dispaly{
+        float: left;
+        width: 50%;
+        padding: 10px;
+        height: 300px;
+    }
+    .row{
+        content: "";
+        display: table;
+        clear: both;
+    }
+</style>
+
+{% endblock %}
+{% block body %}
+    <h1>Story List</h1>
+    <h2>{{ project.title }}</h2>
+    <div class="row">
+    <div class="display">    
+    <h3 class>Scheduled Stories</h3>
+    {% if scheduled_stories %} <ol>{% for story in scheduled_stories %}
+        <li>
+        <h4>Title: {{ story.title }}</h4>
+        <p>Description: {{ story.description }}</p>
+        <p>Estimated time:{{ story.estimated_time }}</p>
+        <p>Assignee: {{ story.assignee }}</p>
+        <p>Status: {{ story.get_status_display }}</p>
+        
+        <a
+                href="{% url 'stories:update_story' project_id=project.id story_id=story.id %}"
+                >Edit
+        </a>
+        <form
+                action="{% url 'stories:delete_story' project_id=project.id story_id=story.id %}"
+                method="post"
+              >
+              {% csrf_token %}
+              <button type="submit">Delete</button>
+        </form>
+        </li>
+    {% endfor %} </ol>{% else %}
+   
+    
+    <p>No scheduled stories found</p>
+    {% endif %}
+    </div>
+    <div class="display">
+    <h3 class>Unscheduled Stories</h3>
+    {% if unscheduled_stories %} <ol>{% for story in unscheduled_stories %}
+        <li><h4>Title : {{ story.title }}</h4>
+        <p>Description: {{ story.description }}</p>
+        <p>Estimated time: {{ story.estimated_time }}</p>
+        <p>Assignee: {{ story.assignee }}</p>
+        <p>Status: {{ story.get_status_display }}</p>
+        
+        <a
+                href="{% url 'stories:update_story' project_id=project.id story_id=story.id %}"
+                
+                >Edit
+        </a>
+        <form
+                action="{% url 'stories:delete_story' project_id=project.id story_id=story.id %}"
+                method="post"
+              >
+              {% csrf_token %}
+              <button type="submit">Delete</button>
+        </form>
+        </li>
+    {% endfor %}</ol> {% else %}
+    <p>No unscheduled stories found</p>
+    {% endif %}
+    </div>
+    </div>
+{% endblock %}

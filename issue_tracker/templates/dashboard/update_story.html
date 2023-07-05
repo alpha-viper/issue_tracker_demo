@@ -1,0 +1,55 @@
+{% extends "dashboard/navigation.html" %}
+{% block body %}
+    <h1>Update Story</h1>
+    {% if users %}
+        <form action="" method="POST">
+            {% csrf_token %} 
+            {% if serializer_errors %}
+
+            {% endif %}
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" value="{{ story.title }}" />
+            <br>
+            <br>
+            <br>
+            <label for="description">Description</label>
+            <textarea id="description" name="description">{{ story.description }}</textarea>
+            <br>
+            <br>
+            <br>
+
+            <label for="estimate">Estimate</label>
+            <input type="text" class="form-control" id="estimate" name="estimate" value="{{ story.estimated_time }}" />
+            <br>
+            <br>
+            <label for="assignee">Assignee</label>
+            <select  id="assignee" name="assignee">
+            {% for user in users %}
+            <option value="{{ user.id }}" {% if user.id == story.assignee.id %}selected{% endif %}>{{ user.first_name }}</option>
+            {% endfor %}
+            </select>
+            <br>
+            <br>
+            <label for="status">Status</label>
+            <select id="status" name="status">
+              {% for choice in status_choices %}
+              <option value="{{ choice.0 }}" {% if choice.0 == story.status %}selected{% endif %}>{{ choice.1 }}</option>
+              {% endfor %}
+            </select>
+            <br>
+            <br>
+        <label for="is_scheduled">Scheduled/UnScheduled:</label>
+          <select id="is_scheduled" name="is_scheduled">
+            {% for choice in schedule_choices %}
+            <option value="{{ choice.0 }}" {% if choice.0 == story.is_scheduled %}selected{% endif %}>{{ choice.1 }}</option>
+            {% endfor %}
+          </select>
+          <br>
+          <br>
+          <button type="submit" class="btn btn-primary mt-3">Update Story</button>
+        </form>
+    {% else %}
+    <p>You're not authorised to update this story</p>
+    {% endif %}
+
+{% endblock %}

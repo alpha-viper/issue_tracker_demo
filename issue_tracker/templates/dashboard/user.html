@@ -1,0 +1,38 @@
+{% extends "dashboard/navigation.html" %}
+
+
+{% block body %}
+<div class="projects">
+    <h2>Hello {{ fname }}</h2>
+    <select name="language" id="filter-options">
+        <option value="All">All</option>
+        <option value="Member">Member</option>
+        <option value="Owner">Owner</option>
+        
+    </select>
+    <h1>Projects</h1>
+    {% if projects %} {% for project in projects %}
+    <h3>{{ project.title }}</h3>
+    <P>{{ project.description }}</P>
+     <a href="{% url 'stories:create_story' project_id=project.id %}">Add Story</a>
+     <a href="{% url 'stories:stories_list' project_id=project.id %}">View Story</a>
+     <a href="{% url 'projects:project_edit' project_id=project.id %}">Edit Project</a>   
+    {% endfor %}
+    {% else %}
+    <h2>No projects assigned</h2>
+    {% endif %}
+
+</div>
+<script>
+    const filterOptions = document.getElementById("filter-options");
+  
+    filterOptions.addEventListener("change", () => {
+      const selectedFilter = filterOptions.value;
+      const url = `/dashboard/${selectedFilter}/`;
+      window.location.href = url;
+    });
+  
+    const currentFilter = "{{ filter_param }}";
+    filterOptions.value = currentFilter;
+  </script>
+{% endblock %}
